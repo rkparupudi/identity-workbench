@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+.env
+
+# Local data: never commit real identity exports or the local store
+sample_data/
+data/*
+!data/.gitkeep
+*.db
+*.html
+!docs/*.html
+findings*.csv
+sample_artifacts/

@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "identity-workbench"
+version = "0.1.0"
+description = "Identity hygiene auditor, identity debugger and MCP server for IAM practitioners"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "rapidfuzz>=3.0",
+    "lxml>=5.0",
+    "pyjwt[crypto]>=2.8",
+]
+
+[project.optional-dependencies]
+llm = ["anthropic>=0.40"]
+api = ["fastapi>=0.110", "uvicorn>=0.27", "python-multipart>=0.0.9"]
+mcp = ["mcp>=1.2"]
+web = ["streamlit>=1.36"]
+dev = ["pytest>=8.0", "httpx>=0.27"]
+all = [
+    "anthropic>=0.40",
+    "fastapi>=0.110", "uvicorn>=0.27", "python-multipart>=0.0.9",
+    "mcp>=1.2",
+    "streamlit>=1.36",
+    "pytest>=8.0", "httpx>=0.27",
+]
+
+[project.scripts]
+idw = "workbench.cli:main"
+idw-mcp = "workbench.mcp_server.server:main"
+
+[tool.setuptools.packages.find]
+include = ["workbench*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

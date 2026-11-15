@@ -1,0 +1,30 @@
+# docker compose up --build
+#   web app  -> http://localhost:8501
+#   API docs -> http://localhost:8000/docs
+# ./data on your machine is mounted at /data/files: put exports there to use them
+# from the command line inside the container.
+services:
+  web:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - IDW_MODEL=${IDW_MODEL:-claude-sonnet-5-5}
+    volumes:
+      - idw-store:/data/store
+      - ./data:/data/files
+  api:
+    build: .
+    command: ["uvicorn", "workbench.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "8000:8000"
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - IDW_MODEL=${IDW_MODEL:-claude-sonnet-5-5}
+    volumes:
+      - idw-store:/data/store
+      - ./data:/data/files
+
+volumes:
+  idw-store:
